@@ -120,7 +120,7 @@ router.post('/login',
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
@@ -164,9 +164,9 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-router.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/facebook', passport.authenticate('facebook'));
 
-router.get('/auth/facebook/callback',
+router.get('/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
 

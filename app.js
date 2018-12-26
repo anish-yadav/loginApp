@@ -35,7 +35,7 @@ app.use(cookieParse());
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use(session({
-    secret:process.env.sercet,
+    secret:process.env.secret,
     saveUninitialized: true,
     resave : true
 }
