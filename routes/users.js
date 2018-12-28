@@ -75,38 +75,40 @@ router.post('/register',(req,res)=>{
 	}
 });
 
-
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.getUserByUsername(username,(err,user)=>{
-            if (err) throw err;
-            if(!user) {
-                return done(null,false,{message:"unknown user"});
-            }
-            User.checkPassword(password,user.password,(err,match)=>{
-                if (err) throw err;
-                if (match) {
-                    return done(null,user);
-                } else {
-                    return done(null,false,{message:"Invalid Password"});
-                }
-            });
+require('../config/passport')(passport);
 
 
-        });
-    }
-  ));
+// passport.use(new LocalStrategy(
+//     function(username, password, done) {
+//         User.getUserByUsername(username,(err,user)=>{
+//             if (err) throw err;
+//             if(!user) {
+//                 return done(null,false,{message:"unknown user"});
+//             }
+//             User.checkPassword(password,user.password,(err,match)=>{
+//                 if (err) throw err;
+//                 if (match) {
+//                     return done(null,user);
+//                 } else {
+//                     return done(null,false,{message:"Invalid Password"});
+//                 }
+//             });
 
 
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
+//         });
+//     }
+//   ));
+
+
+//   passport.serializeUser(function(user, done) {
+//     done(null, user.id);
+//   });
   
-  passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
-      done(err, user);
-    });
-  });
+//   passport.deserializeUser(function(id, done) {
+//     User.getUserById(id, function(err, user) {
+//       done(err, user);
+//     });
+//   });
 router.post('/login',
   passport.authenticate('local',{successRedirect:'/',failureRedirect:'/users/login', failureFlash:true}),
   function(req, res) {
@@ -115,54 +117,8 @@ router.post('/login',
   });
 
 
-  //Facebook
+//   //Facebook
 
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
-        if (err)
-            return done(err);
-
-        if (user) {
-
-            // if there is a user id already but no token (user was linked at one point and then removed)
-            if (!user.facebook.token) {
-                user.facebook.token = token;
-                user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                user.facebook.email = (profile.emails[0].value || '').toLowerCase();
-
-                user.save(function(err) {
-                    if (err)
-                        return done(err);
-                        
-                    return done(null, user);
-                });
-            }
-
-            return done(null, user); // user found, return that user
-        } else {
-            // if there is no user, create them
-            var newUser            = new User();
-
-            newUser.facebook.id    = profile.id;
-            newUser.facebook.token = token;
-            newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-            newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
-
-            newUser.save(function(err) {
-                if (err)
-                    return done(err);
-                    
-                return done(null, newUser);
-            });
-        }
-    });
-  }
-));
 
 router.get('/facebook', passport.authenticate('facebook'));
 
@@ -170,6 +126,26 @@ router.get('/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
 
+
+    router.get('/twitter',
+    passport.authenticate('twitter'));
+
+    router.get('/twitter/callback', 
+        passport.authenticate('twitter', { failureRedirect: '/login' }),
+        function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/');
+        });
+
+
+  router.get('/google',
+  passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
+
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
   router.get('/logout',(req,res) =>{
      req.logout();

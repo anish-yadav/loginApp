@@ -21,11 +21,32 @@ var UserSchema = new mongoose.Schema({
         unique : true
     },
    facebook : {
-                id           : String,
-                token        : String,
-                name         : String,
-                email        : String
+    id           : String,
+    token        : String,
+    name         : String,
+    email        : String,
+    img          : {
+        src : String
+    }
     },
+    twitter : {
+        id           : String,
+        token        : String,
+        name         : String,
+        email        : String,
+        img          : {
+            src : String
+           }
+        },
+        google : {
+            id           : String,
+            token        : String,
+            name         : String,
+            email        : String,
+            img          : {
+                src : String
+               }
+            }
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
