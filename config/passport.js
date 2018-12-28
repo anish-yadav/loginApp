@@ -51,7 +51,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/users/facebook/callback",
     profileFields: ['id', 'displayName', 'emails', 'photos']
   },
-  function(token, refreshToken, refreshToken, profile, done) {
+  function(token, refreshToken, profile, done) {
     //   console.log(profile.photos[0].value);
     //   console.log(profile._json.picture.data.url);
     User.findOne({ 'facebook.id' : profile.id}, function(err, user) {
@@ -66,7 +66,7 @@ passport.use(new FacebookStrategy({
                 user.facebook.email = '';
                 user.facebook.img.src = profile.photos[0].value;
                   
-                console.log('already');
+                // console.log('already');
                 user.save(function(err) {
                     if (err)
                         return done(err);
@@ -84,7 +84,7 @@ passport.use(new FacebookStrategy({
             newUser.facebook.name  = profile.displayName;
             newUser.facebook.email = ' ';
             newUser.facebook.img.src = profile.photos[0].value;
-             console.log('No');
+            //  console.log('No');
             newUser.save(function(err) {
                 if (err)
                     return done(err);
@@ -105,13 +105,14 @@ passport.use(new TwitterStrategy({
   function(token, tokenSecret, profile, done) {
     //   console.log(profile);
     User.findOne({ 'twitterId': profile.id }, function (err, user) {
-       //Handling error
-       console.log(null);
+    //    //Handling error
+    //    console.log(null);
        if(err) {
            return done(err);
        }
             // if there is a user id already but no token (user was linked at one point and then removed)
             if(user != null) {
+                if(!user.twitter.token) {
                 user.twitter.token = token;
                 user.twitter.username  = profile.displayName;
                 user.twitter.email = '';
@@ -121,6 +122,7 @@ passport.use(new TwitterStrategy({
                         return done(err);
                     return done(null, user);
                 });
+              }
                 return done(null, user); // user found, return that user
             } else {
                 // if there is no user, create them
@@ -131,7 +133,7 @@ passport.use(new TwitterStrategy({
                 newUser.twitter.name  = profile.displayName;
                 newUser.twitter.email = ' ';
                 newUser.twitter.img.src = profile.photos[0].value;
-                console.log('No');
+                // console.log('No');
                 newUser.save(function(err) {
                     if (err)
                         return done(err);

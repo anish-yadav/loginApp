@@ -37,12 +37,13 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(session({
     secret:process.env.secret,
     saveUninitialized: true,
-    resave : true
+    resave : false
 }
 ));
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
+app.use(passport.session({ secret: 'Shhh.. This is a secret', cookie: { secure: true } }));
 
 
 app.use(expressValidator({

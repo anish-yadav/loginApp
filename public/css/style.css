@@ -9,3 +9,38 @@
   img.userImage {
     border-radius: 50%;
   }
+  a.nav-link {
+    display: inline;
+  
+  }
+  a.navbar-brand {
+    color: #fff;
+  }
+  .page-header {
+    color: #fff;
+  }
+  body {
+    background-image: url('../img/2.jpg');
+  }
+  /* signUp form */
+
+  #signUp {
+    background: #000;
+    opacity: 0.8;
+    padding: 40px;
+    text-align: center;
+    border-radius: 15px;
+  }
+  label {
+    color: white;
+    float: left;
+  }
+
+  #signIn {
+    margin-left: 70px;
+    width: 400px;
+    text-align: center;
+  }
+  button {
+    margin: 0 auto;
+  }

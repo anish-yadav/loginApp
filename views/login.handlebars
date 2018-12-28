@@ -1,12 +1,12 @@
 <h3 class="text-center">Login To App</h2><br>
 <p class="text-center">USING</p>
 <div class="text-center">
-<a href="/users/facebook"><i class="fab fa-facebook-square login"></i></a>
-<a href="/users/twitter"><i class="fab fa-twitter-square login"></i></a>
-<a href="/users/google"><i class="fab fa-google login"></i></a>
+<a class="nav-link" href="/users/facebook"><i class="fab fa-facebook-square login"></i></a>
+<a class="nav-link" href="/users/twitter"><i class="fab fa-twitter-square login"></i></a>
+<a class="nav-link disabled"  href="/users/google"><i class="fab fa-google login"></i></a>
 </div><br>
 <h4 class="text-center">OR</h3>
-<form method="POST" action="/users/login">
+<form id="signIn" method="POST" action="/users/login">
 <div class="form-group">
 <label for="">Username</label>
 <input type="text" name="username" class="form-control" placeholder="username">
@@ -15,6 +15,6 @@
 <label for="">Password</label>
 <input type="password" name="password" class="form-control" placeholder="******">
 </div>
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Login</button>
 
 </form>
