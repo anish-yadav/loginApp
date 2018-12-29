@@ -3,27 +3,27 @@ var bcrypt = require('bcryptjs');
 
 //Schema 
 var UserSchema = new mongoose.Schema({
-    username : {
-        type: String ,
-        unique:true,
-        index: true
-        
-    },
-    name : {
-        type : String,
-    },
-    password: {
-        type : String,
-        minlength : 6
-    },
-    email : {
-        type :String,
-        unique : true
-    },
+    local : {
+            username : {
+            type: String,
+            index: false
+            
+        },
+        name : {
+            type : String,
+        },
+        password: {
+            type : String
+        },
+        email : {
+            type :String
+        }
+   },
    facebook : {
     id           : String,
     token        : String,
     name         : String,
+    username     : String,
     email        : String,
     img          : {
         src : String
@@ -33,6 +33,7 @@ var UserSchema = new mongoose.Schema({
         id           : String,
         token        : String,
         name         : String,
+        username     : String,
         email        : String,
         img          : {
             src : String
@@ -54,19 +55,19 @@ User.createIndexes();
 
 module.exports.createUser = (newUser, callback) =>{
     bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(newUser.password, salt, function(err, hash) {
-          newUser.password = hash;
+        bcrypt.hash(newUser.local.password, salt, function(err, hash) {
+          newUser.local.password = hash;
           newUser.save(callback);
         });
     });
 }
 
-User.getUserByEmail = (email, callback) =>{
-    User.findOne({email},callback);
- }
+// User.getUserByEmail = (email, callback) =>{
+//     User.findOne({email},callback);
+//  }
 
 User.getUserByUsername = (username, callback) =>{
-   User.findOne({username},callback);
+   User.findOne({'local.username' : username},callback);
 }
 
 User.getUserById = (id, callback) =>{

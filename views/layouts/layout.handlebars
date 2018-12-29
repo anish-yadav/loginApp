@@ -20,13 +20,13 @@
           <ul class="navbar-nav ml-auto">
              {{#if user}}
              <li class="nav-item">
-             <a class="nav-link " style="color:#fff" href="/">Dashboard</a>
+             <a class="nav-link mb-auto mt-auto " style="color:#fff" href="/">Dashboard</a>
              </li>
              <li class="nav-item">
-             <a class="nav-link" style="color:#fff" href="/users/logout">Logout</a>
+             <a class="nav-link mb-auto mt-auto" style="color:#fff" href="/users/logout">Logout</a>
              </li>
              <li class="nav-item">
-             <img class="userImage" src={{user.twitter.img.src}} alt="">
+             <img class="userImage" src={{user.twitter.img.src}}{{user.facebook.img.src}} alt="">
             
              </li>
             {{else}}

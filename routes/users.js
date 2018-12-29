@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
 
 var User = require('../model/user');
 //Register
@@ -29,18 +27,17 @@ router.post('/register',(req,res)=>{
     req.checkBody('email','Please enter an email').notEmpty();
     req.checkBody('email','Please enter a valid email').isEmail();
     req.checkBody('password','A password must be set').notEmpty();
-     console.log(password2+"  " + password);
+    req.checkBody('password','Must be more than 6 characters').isLength({min:6});
      req.checkBody('password2','Password must match').equals(req.body.password);
     var errors = req.validationErrors();
-    
     if (errors) {
          res.render('register',{errors});
     } else {
-        //checking for email and username are already taken
-		User.findOne({ username: { 
+        //checking for email and username are already taken or not
+		User.findOne({ 'local.username': { 
                             "$regex": "^" + username + "\\b", "$options": "i"
                     }}, function (err, user) {
-                            User.findOne({ email: { 
+                            User.findOne({ 'local.email': { 
                                 "$regex": "^" + email + "\\b", "$options": "i"
                         }}, function (err, mail) {
                                 if (user || mail) {
@@ -48,7 +45,7 @@ router.post('/register',(req,res)=>{
                                         var errors = [{
                                             param: "email",
                                             msg:"Email already taken",
-                                           value:email
+                                            value:email
                                     }];
                                         res.render('register', {errors})
                                     }
@@ -56,16 +53,19 @@ router.post('/register',(req,res)=>{
                                         var errors = [{
                                             param: "username",
                                             msg:"Username already taken",
-                                           value:user.username
+                                           value:user.local.username
                                     }];
                                         res.render('register', {errors})
                                     }
                                 }
                                 else {
-                                    var newUser = new User({name,email,username,password});
+                                    var newUser = new User();
+                                    newUser.local.name = name;
+                                    newUser.local.username = username ;
+                                    newUser.local.password = password;
+                                    newUser.local.email  = email;
                                     User.createUser(newUser, function (err, user) {
                                         if (err) throw err;
-                                        console.log(user);
                                     });
                                      req.flash('success_msg', 'You are registered . Can login now');
                                     res.redirect('/users/login');
@@ -78,37 +78,6 @@ router.post('/register',(req,res)=>{
 require('../config/passport')(passport);
 
 
-// passport.use(new LocalStrategy(
-//     function(username, password, done) {
-//         User.getUserByUsername(username,(err,user)=>{
-//             if (err) throw err;
-//             if(!user) {
-//                 return done(null,false,{message:"unknown user"});
-//             }
-//             User.checkPassword(password,user.password,(err,match)=>{
-//                 if (err) throw err;
-//                 if (match) {
-//                     return done(null,user);
-//                 } else {
-//                     return done(null,false,{message:"Invalid Password"});
-//                 }
-//             });
-
-
-//         });
-//     }
-//   ));
-
-
-//   passport.serializeUser(function(user, done) {
-//     done(null, user.id);
-//   });
-  
-//   passport.deserializeUser(function(id, done) {
-//     User.getUserById(id, function(err, user) {
-//       done(err, user);
-//     });
-//   });
 router.post('/login',
   passport.authenticate('local',{successRedirect:'/',failureRedirect:'/users/login', failureFlash:true}),
   function(req, res) {

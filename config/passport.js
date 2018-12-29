@@ -14,7 +14,7 @@ module.exports = (passport) =>  {
             if(!user) {
                 return done(null,false,{message:"unknown user"});
             }
-            User.checkPassword(password,user.password,(err,match)=>{
+            User.checkPassword(password,user.local.password,(err,match)=>{
                 if (err) throw err;
                 if (match) {
                     return done(null,user);
@@ -62,6 +62,7 @@ passport.use(new FacebookStrategy({
             // if there is a user id already but no token (user was linked at one point and then removed)
             if (!user.facebook.token) {
                 user.facebook.token = token;
+                user.facebook.name  = profile.displayName;
                 user.facebook.username  = profile.displayName;
                 user.facebook.email = '';
                 user.facebook.img.src = profile.photos[0].value;
@@ -82,6 +83,7 @@ passport.use(new FacebookStrategy({
             newUser.facebook.id    = profile.id;
             newUser.facebook.token = token;
             newUser.facebook.name  = profile.displayName;
+           // if(newUser.facebook.username ==) newUser.facebook.username  = profile.displayName;
             newUser.facebook.email = ' ';
             newUser.facebook.img.src = profile.photos[0].value;
             //  console.log('No');
@@ -104,7 +106,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, done) {
     //   console.log(profile);
-    User.findOne({ 'twitterId': profile.id }, function (err, user) {
+    User.findOne({ 'twitter.id': profile.id }, function (err, user) {
     //    //Handling error
     //    console.log(null);
        if(err) {
@@ -114,7 +116,8 @@ passport.use(new TwitterStrategy({
             if(user != null) {
                 if(!user.twitter.token) {
                 user.twitter.token = token;
-                user.twitter.username  = profile.displayName;
+               // user.twitter.username  = profile.displayName;
+                user.twitter.name  = profile.displayName;
                 user.twitter.email = '';
                 user.twitter.img.src = profile.photos[0].value;
                 user.save(function(err) {
@@ -131,6 +134,7 @@ passport.use(new TwitterStrategy({
                 newUser.twitter.id    = profile.id;
                 newUser.twitter.token = token;
                 newUser.twitter.name  = profile.displayName;
+                newUser.twitter.username  = profile.displayName;
                 newUser.twitter.email = ' ';
                 newUser.twitter.img.src = profile.photos[0].value;
                 // console.log('No');
