@@ -151,34 +151,34 @@ passport.use(new TwitterStrategy({
 
 // GOOGLE 
 
-    passport.use(new GoogleStrategy({
-    consumerKey: process.env.GOOGLE_CONSUMER_KEY,
-    consumerSecret: process.env.GOOGLE_CONSUMER_SECRET,
-    callbackURL: "http:/127.0.0.1:3000/users/google/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-      User.findOne({ googleId: profile.id }, function (err, user) {
-        if(err) return done(err);
+//     passport.use(new GoogleStrategy({
+//     consumerKey: process.env.GOOGLE_CONSUMER_KEY,
+//     consumerSecret: process.env.GOOGLE_CONSUMER_SECRET,
+//     callbackURL: "http:/127.0.0.1:3000/users/google/callback"
+//   },
+//   function(token, tokenSecret, profile, done) {
+//       User.findOne({ googleId: profile.id }, function (err, user) {
+//         if(err) return done(err);
 
-        if(user != null) {
-            if(!user.twitter.token){
+//         if(user != null) {
+//             if(!user.twitter.token){
 
-            }
+//             }
            
-        } else {
-            var newUser  = new User();
-            newUser.google.id = profile.id;
-            newUser.google.name = profile.displayName;
-            newUser.google.img.src = profile.photos[0].value;
-            newUser.google.token = token;
-           newUser.save((err)=>{
-               if(err) return done(err);
+//         } else {
+//             var newUser  = new User();
+//             newUser.google.id = profile.id;
+//             newUser.google.name = profile.displayName;
+//             newUser.google.img.src = profile.photos[0].value;
+//             newUser.google.token = token;
+//            newUser.save((err)=>{
+//                if(err) return done(err);
 
-               return done(null,newUser);
-           });
-        }
-      });
-  }
-));
+//                return done(null,newUser);
+//            });
+//         }
+//       });
+//   }
+// ));
 
 }
