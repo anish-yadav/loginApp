@@ -10,7 +10,7 @@ router.get('/register',(req,res)=>{
 
 //signin
 router.get('/login',(req,res)=>{
-    res.render('Login');
+    res.render('login');
 });
 
 //Register new user
