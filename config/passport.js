@@ -48,7 +48,7 @@ module.exports = (passport) =>  {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/users/facebook/callback",
+    callbackURL: process.env.FACEBOOK_CALLBACK_URL,
     profileFields: ['id', 'displayName', 'emails', 'photos']
   },
   function(token, refreshToken, profile, done) {
@@ -102,7 +102,7 @@ passport.use(new FacebookStrategy({
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://127.0.0.1:3000/users/twitter/callback"
+    callbackURL: process.env.TWITTER_CALLBACK_URL
   },
   function(token, tokenSecret, profile, done) {
     //   console.log(profile);
