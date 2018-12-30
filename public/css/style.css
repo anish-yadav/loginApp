@@ -20,7 +20,8 @@
     color: #fff;
   }
   body {
-    background-image: url('../img/2.jpg');
+    background-image: url('../img/5.jpg');
+    background-size: 100% 100%;
   }
   /* signUp form */
 
@@ -37,10 +38,11 @@
   }
 
   #signIn {
-    margin-left: 70px;
-    width: 400px;
     text-align: center;
   }
   button {
     margin: 0 auto;
+  }
+  div.col-lg-3 {
+    max-width: 100%;
   }
