@@ -17,38 +17,37 @@
 
  3. create a confg.json file right beside the config.js file .. like this 
 
- {::nomarkdown}
+  ```json 
   
-  {
-	"test":{
-     "PORT": 3000,
-     "MONGODB_URI":"mongodb://localhost:27017/loginapp",
-     "secret":"Phenomenal",
-     "FACEBOOK_CALLBACK_URL":"http://localhost:3000/users/facebook/callback",
-     "FACEBOOK_APP_ID":FACEBOOK_APP_ID,
-     "FACEBOOK_APP_SECRET":"FACEBOOK_APP_SECRET",
-     "TWITTER_CALLBACK_URL":"http://127.0.0.1:3000/users/twitter/callback",
-     "TWITTER_CONSUMER_KEY": "TWITTER_CONSUMER_KEY"  ,
-     "TWITTER_CONSUMER_SECRET":"TWITTER_CONSUMER_SECRET",
-     "GOOGLE_CONSUMER_KEY": "GOOGLE_CONSUMER_KEY" ,
-     "GOOGLE_CONSUMER_SECRET":"GOOGLE_CONSUMER_SECRET"
-	},
-	"development":{
-     "PORT": 3000,
-     "MONGODB_URI":"mongodb://localhost:27017/loginapp",
-     "secret":"Phenomenal",
-     "FACEBOOK_CALLBACK_URL":"http://localhost:3000/users/facebook/callback",
-     "FACEBOOK_APP_ID":FACEBOOK_APP_ID,
-     "FACEBOOK_APP_SECRET":"FACEBOOK_APP_SECRET",
-     "TWITTER_CALLBACK_URL":"http://127.0.0.1:3000/users/twitter/callback",
-     "TWITTER_CONSUMER_KEY": "TWITTER_CONSUMER_KEY" ,
-     "TWITTER_CONSUMER_SECRET":"zTyHW3oy3GR43XKvD6e6BooCTP4zNoW4bHXokVBwmhnVTyHFSn",
-     "GOOGLE_CONSUMER_KEY": "GOOGLE_CONSUMER_KEY" ,
-     "GOOGLE_CONSUMER_SECRET":"GOOGLE_CONSUMER_SECRET"
-	}
-}
-
- {:/}
+        {
+            "test":{
+            "PORT": 3000,
+            "MONGODB_URI":"mongodb://localhost:27017/loginapp",
+            "secret":"Phenomenal",
+            "FACEBOOK_CALLBACK_URL":"http://localhost:3000/users/facebook/callback",
+            "FACEBOOK_APP_ID":FACEBOOK_APP_ID,
+            "FACEBOOK_APP_SECRET":"FACEBOOK_APP_SECRET",
+            "TWITTER_CALLBACK_URL":"http://127.0.0.1:3000/users/twitter/callback",
+            "TWITTER_CONSUMER_KEY": "TWITTER_CONSUMER_KEY"  ,
+            "TWITTER_CONSUMER_SECRET":"TWITTER_CONSUMER_SECRET",
+            "GOOGLE_CONSUMER_KEY": "GOOGLE_CONSUMER_KEY" ,
+            "GOOGLE_CONSUMER_SECRET":"GOOGLE_CONSUMER_SECRET"
+            },
+            "development":{
+            "PORT": 3000,
+            "MONGODB_URI":"mongodb://localhost:27017/loginapp",
+            "secret":"Phenomenal",
+            "FACEBOOK_CALLBACK_URL":"http://localhost:3000/users/facebook/callback",
+            "FACEBOOK_APP_ID":FACEBOOK_APP_ID,
+            "FACEBOOK_APP_SECRET":"FACEBOOK_APP_SECRET",
+            "TWITTER_CALLBACK_URL":"http://127.0.0.1:3000/users/twitter/callback",
+            "TWITTER_CONSUMER_KEY": "TWITTER_CONSUMER_KEY" ,
+            "TWITTER_CONSUMER_SECRET":"zTyHW3oy3GR43XKvD6e6BooCTP4zNoW4bHXokVBwmhnVTyHFSn",
+            "GOOGLE_CONSUMER_KEY": "GOOGLE_CONSUMER_KEY" ,
+            "GOOGLE_CONSUMER_SECRET":"GOOGLE_CONSUMER_SECRET"
+            }
+        }
+ ```
 
 
  Then run using npm start .......
