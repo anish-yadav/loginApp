@@ -8,6 +8,9 @@
   }
   img.userImage {
     border-radius: 50%;
+    position: relative;
+    top: -10px;
+    left: -10px;
   }
   a.nav-link {
     display: inline;
@@ -45,4 +48,10 @@
   }
   div.col-lg-3 {
     max-width: 100%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    li.profilepic {
+        display:none;
+    }
   }
