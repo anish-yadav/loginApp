@@ -1,7 +1,7 @@
 # LOGIN APP
  This is a login app from where you can login using your facebook, twitter or create an account locally .
 
- ## Resouces Used 
+ ## Resources Used 
 
  ### passportJS
 
